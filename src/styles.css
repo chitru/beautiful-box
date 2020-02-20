@@ -44,5 +44,6 @@ select {
 }
 
 .react-datepicker__input-container {
-  margin-right: 23px;
+  margin-right: 26px;
+  margin-bottom: -5px;
 }
