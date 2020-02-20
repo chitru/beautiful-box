@@ -1,4 +1,41 @@
-.App {
-  font-family: sans-serif;
-  text-align: center;
+@import url("https://fonts.googleapis.com/css?family=Lato:400,900&display=swap");
+* {
+  font-family: "Lato", sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-size: 16px;
+  line-height: 26px;
+  color: #333;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+input,
+select {
+  margin-left: 15px;
+  padding-left: 8px;
+  height: 20px;
+  border-radius: 5px;
+  border: 1px solid #eee;
+  float: right;
+  background-color: transparent;
+  color: #aaa;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  background-color: transparent;
+  margin: 0.5rem 0;
+}
+
+.react-datepicker__input-container {
+  margin-right: 23px;
 }
