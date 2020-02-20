@@ -35,15 +35,26 @@ select {
   max-width: 155px;
 }
 
-.btn {
+.btn,
+button {
   padding-left: 13px;
   padding-right: 13px;
   background-color: transparent;
   background-color: #333;
   color: #fff;
+  border-radius: 5px;
+}
+
+button {
+  height: 28px;
 }
 
 .react-datepicker__input-container {
   margin-right: 26px;
   margin-bottom: -5px;
+}
+
+.table {
+  margin: 10px auto;
+  max-width: 450px;
 }

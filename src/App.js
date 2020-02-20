@@ -3,6 +3,7 @@ import StatesDropdown from "./States";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
+import DataTable from "react-data-table-component";
 
 const headText = {
   textAlign: "center",
@@ -11,6 +12,33 @@ const headText = {
   fontWeight: "bold",
   letterSpacing: "0.566px"
 };
+
+const data = [
+  {
+    id: 1,
+    title: "Name",
+    name: "James Hetfield"
+  },
+  {
+    id: 2,
+    title: "Email",
+    name: "james@alltheworld.com"
+  }
+];
+
+const columns = [
+  {
+    name: "Title",
+    selector: "title",
+    sortable: true
+  },
+  {
+    name: "Information",
+    selector: "name",
+    sortable: true,
+    right: true
+  }
+];
 
 class App extends Component {
   constructor() {
@@ -33,14 +61,6 @@ class App extends Component {
 
   handleChange(evt) {
     this.setState({
-      // name: e.target,
-      // email: e.target.value,
-      // phone: e.target.value,
-      // street: e.target.value,
-      // city: e.target.value,
-      // zip: e.target.value,
-      // stateName: e.target.value,
-      // country: "Australia"
       [evt.target.name]: evt.target.value
     });
   }
@@ -51,14 +71,21 @@ class App extends Component {
     });
   };
 
-  handleSubmit(e) {
-    e.preventDefault();
-    console.log("hey");
+  handleSubmit(evt) {
+    evt.preventDefault();
+    this.setState({
+      [evt.target.name]: evt.target.value
+    });
+  }
+
+  handleBtnAdd(evt) {
+    evt.preventDefault();
+    console.log("Adding");
   }
 
   render() {
     return (
-      <div>
+      <>
         <div className="top">
           <h2 style={headText}>Hey there, Let's get started</h2>
         </div>
@@ -147,10 +174,24 @@ class App extends Component {
             </div>
             <div>
               <input type="submit" value="Submit" className="btn" />
+              <br />
+              <input
+                type="submit"
+                onClick={this.handleBtnAdd}
+                value="Add a Person"
+                className="btn"
+              />
             </div>
           </form>
         </div>
-      </div>
+        <div className="table">
+          <DataTable
+            title="Personal Information"
+            columns={columns}
+            data={data}
+          />
+        </div>
+      </>
     );
   }
 }
