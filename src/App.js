@@ -60,7 +60,7 @@ class App extends Component {
     return (
       <div>
         <div className="top">
-          <h2 style={headText}>Welcome, Let's get started</h2>
+          <h2 style={headText}>Hey there, Let's get started</h2>
         </div>
         <div className="form">
           <form onSubmit={this.handleSubmit}>
@@ -132,9 +132,8 @@ class App extends Component {
             <div>
               <StatesDropdown
                 label="State"
-                value={this.state.stateName}
                 onChange={this.handleChange}
-                name="state"
+                name="stateName"
               />
             </div>
             <div>
@@ -146,7 +145,9 @@ class App extends Component {
                 disabled
               />
             </div>
-            <input type="submit" value="Submit" className="btn" />
+            <div>
+              <input type="submit" value="Submit" className="btn" />
+            </div>
           </form>
         </div>
       </div>
