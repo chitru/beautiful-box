@@ -4,13 +4,6 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
 
-const image = {
-  width: "100%",
-  backgroundPosition: "center",
-  backgroundSize: "cover",
-  marginTop: "-50px"
-};
-
 const headText = {
   textAlign: "center",
   margin: "20px",
@@ -67,11 +60,6 @@ class App extends Component {
     return (
       <div>
         <div className="top">
-          <img
-            src="https://images.unsplash.com/photo-1559030623-0226b1241edd?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1189&q=80"
-            alt="headimage"
-            style={image}
-          />
           <h2 style={headText}>Welcome, Let's get started</h2>
         </div>
         <div className="form">
@@ -158,7 +146,7 @@ class App extends Component {
                 disabled
               />
             </div>
-            <input type="submit" value="Submit" />
+            <input type="submit" value="Submit" className="btn" />
           </form>
         </div>
       </div>
