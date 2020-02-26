@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import StatesDropdown from "./States";
 // import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
+// import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
 import DataTable from "react-data-table-component";
 
@@ -28,55 +28,86 @@ const App = () => {
     }
   ]);
 
+  let data = [
+    {
+      title: "Name",
+      name: fields.name
+    },
+    {
+      title: "Email",
+      name: fields.email
+    },
+    {
+      title: "Phone",
+      name: fields.phone
+    }
+  ];
+
+  let columns = [
+    {
+      name: "Title",
+      selector: "title",
+      sortable: true
+    },
+    {
+      name: "Information",
+      selector: "name",
+      sortable: true,
+      right: true
+    }
+  ];
+
   const handleSubmit = e => {
     e.preventDefault();
-    console.log("Fields", fields);
-    let data = [
-      {
-        id: 1,
-        title: "Name",
-        name: "James Hetfield"
-      },
-      {
-        id: 2,
-        title: "Email",
-        name: "james@alltheworld.com"
-      }
-    ];
+    const val = [...fields];
+    setFields(val);
+    console.log("Fields.value", fields);
 
-    let columns = [
-      {
-        name: "Title",
-        selector: "title",
-        sortable: true
-      },
-      {
-        name: "Information",
-        selector: "name",
-        sortable: true,
-        right: true
-      }
-    ];
-
-    return (
-      <div className="table">
-        <DataTable title="Personal Information" columns={columns} data={data} />
-      </div>
-    );
+    // return (
+    //   <div className="table">
+    //     <DataTable title="Personal Information" columns={columns} data={data} />
+    //   </div>
+    // );
   };
 
-  const handleChange = e => {
-    console.log("Fields", fields);
-    // console.log(evt.target.name);
-    setFields("fields");
-    // const values = [...fields];
-    // if(e.target.name === "name"){
-
-    // }
-    // e.target.name = e.target.value;
+  const handleChange = (idx, e) => {
+    const values = [...fields];
+    switch (e.target.name) {
+      case "name":
+        values[idx].name = e.target.value;
+        break;
+      case "email":
+        values[idx].email = e.target.value;
+        break;
+      case "phone":
+        values[idx].phone = e.target.value;
+        break;
+      case "dob":
+        values[idx].dob = e.target.value;
+        break;
+      case "street":
+        values[idx].street = e.target.value;
+        break;
+      case "city":
+        values[idx].city = e.target.value;
+        break;
+      case "zip":
+        values[idx].zip = e.target.value;
+        break;
+      case "stateName":
+        values[idx].stateName = e.target.value;
+        break;
+      case "country":
+        values[idx].country = "Australia";
+        break;
+      default:
+        throw new Error();
+    }
+    setFields(values);
+    console.log(values);
   };
 
-  const handleAdd = () => {
+  const handleAdd = e => {
     const values = [...fields];
     values.push({ value: null });
     setFields(values);
@@ -179,8 +210,8 @@ const App = () => {
                 <input
                   type="text"
                   value={fields.country}
+                  onChange={e => handleChange(idx, e)}
                   name="country"
-                  disabled
                 />
               </div>
               <div>
@@ -201,14 +232,16 @@ const App = () => {
               </div>
             </div>
           ))}
+          <button type="submit" className="btn" onClick={e => handleSubmit(e)}>
+            Submit
+          </button>
         </div>
       </form>
-      {/* <div className="table">
+      <div className="table">
         <DataTable title="Personal Information" columns={columns} data={data} />
-      </div> */}
+      </div>
     </>
   );
-  // }
 };
 
 export default App;
