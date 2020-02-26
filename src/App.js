@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import StatesDropdown from "./States";
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./styles.css";
 import DataTable from "react-data-table-component";
@@ -13,187 +13,202 @@ const headText = {
   letterSpacing: "0.566px"
 };
 
-const data = [
-  {
-    id: 1,
-    title: "Name",
-    name: "James Hetfield"
-  },
-  {
-    id: 2,
-    title: "Email",
-    name: "james@alltheworld.com"
-  }
-];
-
-const columns = [
-  {
-    name: "Title",
-    selector: "title",
-    sortable: true
-  },
-  {
-    name: "Information",
-    selector: "name",
-    sortable: true,
-    right: true
-  }
-];
-
-class App extends Component {
-  constructor() {
-    super();
-    this.state = {
+const App = () => {
+  const [fields, setFields] = useState([
+    {
       name: "",
       email: "",
       phone: "",
-      dob: new Date(),
+      dob: "",
       street: "",
       city: "",
       zip: "",
       stateName: "",
       country: "Australia"
-    };
+    }
+  ]);
 
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-  }
+  const handleSubmit = e => {
+    e.preventDefault();
+    console.log("Fields", fields);
+    let data = [
+      {
+        id: 1,
+        title: "Name",
+        name: "James Hetfield"
+      },
+      {
+        id: 2,
+        title: "Email",
+        name: "james@alltheworld.com"
+      }
+    ];
 
-  handleChange(evt) {
-    this.setState({
-      [evt.target.name]: evt.target.value
-    });
-  }
+    let columns = [
+      {
+        name: "Title",
+        selector: "title",
+        sortable: true
+      },
+      {
+        name: "Information",
+        selector: "name",
+        sortable: true,
+        right: true
+      }
+    ];
 
-  handleChangeDate = date => {
-    this.setState({
-      dob: date
-    });
+    return (
+      <div className="table">
+        <DataTable title="Personal Information" columns={columns} data={data} />
+      </div>
+    );
   };
 
-  handleSubmit(evt) {
-    evt.preventDefault();
-    this.setState({
-      [evt.target.name]: evt.target.value
-    });
-  }
+  const handleChange = e => {
+    console.log("Fields", fields);
+    // console.log(evt.target.name);
+    setFields("fields");
+    // const values = [...fields];
+    // if(e.target.name === "name"){
 
-  handleBtnAdd(evt) {
-    evt.preventDefault();
-    console.log("Adding");
-  }
+    // }
+    // e.target.name = e.target.value;
+  };
 
-  render() {
-    return (
-      <>
-        <div className="top">
-          <h2 style={headText}>Hey there, Let's get started</h2>
-        </div>
+  const handleAdd = () => {
+    const values = [...fields];
+    values.push({ value: null });
+    setFields(values);
+  };
+
+  const handleRemove = i => {
+    const values = [...fields];
+    values.splice(i, 1);
+    setFields(values);
+  };
+
+  return (
+    <>
+      <div className="top">
+        <h2 style={headText}>Hey there, Let's get started</h2>
+      </div>
+      <form onSubmit={handleSubmit}>
         <div className="form">
-          <form onSubmit={this.handleSubmit}>
-            <div>
-              <label>Name</label>
-              <input
-                type="text"
-                onChange={this.handleChange}
-                name="name"
-                placeholder="John Doe"
-              />
+          {fields.map((fields, idx) => (
+            <div key={`${fields}-${idx}`}>
+              <div>
+                <label>Name</label>
+                <input
+                  type="text"
+                  name="name"
+                  placeholder="John Doe"
+                  value={fields.name}
+                  onChange={e => handleChange(idx, e)}
+                />
+              </div>
+              <div>
+                <label>Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  placeholder="John@gmail.com"
+                  value={fields.email}
+                  onChange={e => handleChange(idx, e)}
+                />
+              </div>
+              <div>
+                <label>Phone</label>
+                <input
+                  type="number"
+                  name="phone"
+                  placeholder="0449797987"
+                  value={fields.phone}
+                  onChange={e => handleChange(idx, e)}
+                />
+              </div>
+              <div>
+                <label>DOB</label>
+                <input
+                  name="dob"
+                  value={fields.dob}
+                  placeholder="09/09/1999"
+                  onChange={e => handleChange(idx, e)}
+                />
+              </div>
+              <div>
+                <label>Street</label>
+                <input
+                  type="text"
+                  name="street"
+                  placeholder="Victoria St"
+                  value={fields.street}
+                  onChange={e => handleChange(idx, e)}
+                />
+              </div>
+              <div>
+                <label>City</label>
+                <input
+                  type="text"
+                  name="city"
+                  placeholder="Legend"
+                  value={fields.city}
+                  onChange={e => handleChange(idx, e)}
+                />
+              </div>
+              <div>
+                <label>Zip</label>
+                <input
+                  type="number"
+                  name="zip"
+                  placeholder="9100"
+                  value={fields.zip}
+                  onChange={e => handleChange(idx, e)}
+                />
+              </div>
+              <div>
+                <StatesDropdown
+                  label="State"
+                  name="stateName"
+                  value={fields.stateName}
+                  onChange={e => handleChange(idx, e)}
+                />
+              </div>
+              <div>
+                <label>Country</label>
+                <input
+                  type="text"
+                  value={fields.country}
+                  name="country"
+                  disabled
+                />
+              </div>
+              <div>
+                <button
+                  className="btn"
+                  type="button"
+                  onClick={() => handleAdd()}
+                >
+                  Add a Person
+                </button>
+                <button
+                  className="btn"
+                  type="button"
+                  onClick={() => handleRemove()}
+                >
+                  Remove Personal
+                </button>
+              </div>
             </div>
-            <div>
-              <label>Email</label>
-              <input
-                type="email"
-                onChange={this.handleChange}
-                name="email"
-                placeholder="John@gmail.com"
-              />
-            </div>
-            <div>
-              <label>Phone</label>
-              <input
-                type="number"
-                onChange={this.handleChange}
-                name="phone"
-                placeholder="0449797987"
-              />
-            </div>
-            <div>
-              <label>DOB</label>
-              <DatePicker
-                selected={this.state.dob}
-                onChange={this.handleChangeDate}
-                name="dob"
-              />
-            </div>
-            <div>
-              <label>Street</label>
-              <input
-                type="text"
-                value={this.state.street}
-                onChange={this.handleChange}
-                name="street"
-                placeholder="Victoria St"
-              />
-            </div>
-            <div>
-              <label>City</label>
-              <input
-                type="text"
-                value={this.state.city}
-                onChange={this.handleChange}
-                name="city"
-                placeholder="Legend"
-              />
-            </div>
-            <div>
-              <label>Zip</label>
-              <input
-                type="number"
-                value={this.state.zip}
-                onChange={this.handleChange}
-                name="zip"
-                placeholder="9100"
-              />
-            </div>
-            <div>
-              <StatesDropdown
-                label="State"
-                onChange={this.handleChange}
-                name="stateName"
-              />
-            </div>
-            <div>
-              <label>Country</label>
-              <input
-                type="text"
-                value={this.state.country}
-                name="country"
-                disabled
-              />
-            </div>
-            <div>
-              <input type="submit" value="Submit" className="btn" />
-              <br />
-              <input
-                type="submit"
-                onClick={this.handleBtnAdd}
-                value="Add a Person"
-                className="btn"
-              />
-            </div>
-          </form>
+          ))}
         </div>
-        <div className="table">
-          <DataTable
-            title="Personal Information"
-            columns={columns}
-            data={data}
-          />
-        </div>
-      </>
-    );
-  }
-}
+      </form>
+      {/* <div className="table">
+        <DataTable title="Personal Information" columns={columns} data={data} />
+      </div> */}
+    </>
+  );
+  // }
+};
 
 export default App;
